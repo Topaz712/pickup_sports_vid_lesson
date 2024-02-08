@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # http://127.0.0.1:3000/users/1
   put '/users/:id', to: 'users#update'
 
+  # http://127.0.0.1:3000/users/1
+  delete '/users/:id', to: 'users#destroy'
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
