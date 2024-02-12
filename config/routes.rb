@@ -18,8 +18,7 @@ Rails.application.routes.draw do
     get 'posts', to: "users#posts_index"
   end
 
-  resources :posts, only: [:create, :update, :destroy]
-
+  resources :posts
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

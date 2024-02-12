@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
       expect(user2.errors[:username]).to include("has already been taken")
     end
 
-    it 'is not valid without a unique username' do
+    it 'is not valid without a unique email' do
       user1 = create(:user)
       user2 = build(:user, email: user1.email)
 
