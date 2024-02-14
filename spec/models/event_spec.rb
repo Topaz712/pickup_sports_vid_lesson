@@ -46,4 +46,14 @@ RSpec.describe Event, type: :model do
       expect(event.sports.count).to eq(3)
     end
   end
+
+  context "destroy related associations" do
+    it "destroy event participants" do
+      event = create(:event)
+      event_id = event.id
+      event.destroy
+      event_participants = EventParticipant.where
+      expect(event_participants).to be_empty
+    end
+  end
 end
