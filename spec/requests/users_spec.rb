@@ -23,7 +23,7 @@ RSpec.describe "Users", type: :request do
   end
 
   # show
-  describe "GET /user/:id" do
+  describe "GET /users/:id" do
     let(:user) {create(:user)}
 
     before do
@@ -113,7 +113,7 @@ RSpec.describe "Users", type: :request do
 
   # destroy
 
-  describe "DELETE /user/:id" do
+  describe "DELETE /users/:id" do
     let (:user) {create(:user)}
 
     before do
