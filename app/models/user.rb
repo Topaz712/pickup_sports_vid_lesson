@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   private
   def validate_username
-    unless username =~ /\A[a-zA-Z0-9]+\Z/
+    unless username =~ /\A[a-zA-Z0-9_]+\Z/
       errors.add(:username, "can only contain letters, numbers, and underscores, and must contain atleast one letter or number")
     end
   end
