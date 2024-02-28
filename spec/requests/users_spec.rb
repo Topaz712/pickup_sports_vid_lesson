@@ -37,8 +37,8 @@ RSpec.describe "Users", type: :request do
     end
 
     # response with the correct user
-    it "returns a response with the correct post" do
-      expect(response.body).to eq(user.to_json)
+    it "returns a response with the correct user" do
+      expect(JSON.parse(response.body)['username']).to eq(user.username)
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe "Users", type: :request do
       end
 
       # returns a successful response
-      it "returns a success response" do
+      it "returns a successful response" do
         expect(response).to be_successful
       end
 
@@ -66,7 +66,7 @@ RSpec.describe "Users", type: :request do
     context "with invalid params" do
 
       before do
-        post_attributes = attributes_for(:user, first_name: nil)
+        user_attributes = attributes_for(:user, first_name: nil)
         post "/users", params: user_attributes
       end
 
@@ -86,20 +86,21 @@ RSpec.describe "Users", type: :request do
         user_attributes = { first_name: "John" }
         put "/users/#{user.id}", params: user_attributes, headers: { Authorization: "Bearer #{token}" }
       end
+      
+      # returns a successful response
+      it "returns a successful response" do
+        expect(response).to be_successful
+      end
 
       it "updates a user" do
         user.reload
         expect(user.first_name).to eq("John")
       end
-
-      # returns a successful response
-      it "returns a success response" do
-        expect(response).to be_successful
-      end
     end
 
     context "with invalid params" do
       let(:user) {create(:user)}
+      let(:token) {auth_token_for_user(user)}
 
       before do
         user_attributes = {first_name: nil}

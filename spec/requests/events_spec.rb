@@ -39,7 +39,7 @@ RSpec.describe "Events", type: :request do
     end
 
     it "returns a success response" do
-      expect(response).to eq(1)
+      expect(response).to be_successful
     end
   end
 
