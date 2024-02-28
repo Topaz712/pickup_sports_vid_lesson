@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :authenticate_request, except: [:index]
 
   def index
-    events = Event.order(create_at: :desc).page(params[:page]).per(12)
+    events = Event.order(created_at: :desc).page(params[:page]).per(12)
 
     render json: {
       events: EventBlueprint.render_as_hash(events, view: :short),
@@ -46,6 +46,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.permit(:title, :content, :start_date_time, :end_date_time, :guests, :sport_ids ==> [])
+    params.permit(:title, :content, :start_date_time, :end_date_time, :guests, :sport_ids => [])
   end
 end
