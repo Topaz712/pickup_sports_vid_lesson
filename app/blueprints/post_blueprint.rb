@@ -4,6 +4,6 @@ class PostBlueprint < Blueprinter::Base
   identifier :id
 
   view :profile do
-    fields :content, :create_at
+    fields :content, :created_at
   end
 end
