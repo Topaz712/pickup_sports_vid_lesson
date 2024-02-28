@@ -1,7 +1,6 @@
 class Event < ApplicationRecord
   # validations
-  validates :start_date_time, :end_date_time, :guests, presence: true
-  validates :title, presence: true
+  validates :title, :start_date_time, :end_date_time, :guests, presence: true
 
   validate :start_date_time_cannot_be_in_past, :end_date_time_cannot_be_before_start_date_time
 
@@ -16,7 +15,6 @@ class Event < ApplicationRecord
   has_and_belongs_to_many :sports
 
   def start_date_time_cannot_be_in_past
-
     if start_date_time.present? && start_date_time < DateTime.now
       errors.add(:start_date_time, "can't be in the past")
     end
