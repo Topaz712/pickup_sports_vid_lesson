@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'posts', to: "users#posts_index"
   end
   
+  resources :sports
   # localhost:3000/users does not work for me, use http://127.0.0.1:3000/users
   # get '/users', to: 'users#index'
 
