@@ -14,7 +14,7 @@ class EventsController < ApplicationController
 
   # localhost:3000/events/:id
   def show
-    render json: EventBlueprint.render_as_hash(@event, view: :long), status: :ok
+    render json: EventBlueprint.render_as_hash(@event, view: :long, current_user: @current_user), status: :ok
   end
 
   def create
@@ -59,6 +59,11 @@ class EventsController < ApplicationController
     # after going through validations, add current user to list of event participants
     event.participants << @current_user
 
+    Pusher.trigger(event.creator.id, 'notifications', {
+      event_id: event.id,
+      notification: "#{@current_user.username} has joined #{event.title}!"
+    })
+
     head :ok
   end
 
@@ -66,6 +71,12 @@ class EventsController < ApplicationController
     event = Event.find(params[:event_id])
 
     event.participants.delete(@current_user)
+
+    Pusher.trigger(event.creator.id, 'notifications', {
+      event_id: event.id,
+      notification: "#{@current_user.username} has left the #{event.title}!"
+    })
+
     head :ok
   end
 
