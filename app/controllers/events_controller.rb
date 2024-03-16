@@ -37,7 +37,36 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    if @event.destroy
+      render json: nil, status: :ok
+    else
+      render json: @event.errors, status: :unprocessable_entity
+    end
+  end
 
+  def join
+    event = Event.find(params[:event_id])
+
+    # check if the current user is the event creator
+    return render json: { error: "You can't join your own event." }, status: :unprocessable_entity if event.creator.id == @current_user.id
+
+    # check if the event is full
+    return render json: { error: "Event is full" }, status: :unprocessable_entity if event.participants.count >= event.guests
+
+    # check if the current user is already a participant
+    return render json: { error: "You are already a participant" }, status: :unprocessable_entity if event.participants.include?(@current_user)
+
+    # after going through validations, add current user to list of event participants
+    event.participants << @current_user
+
+    head :ok
+  end
+
+  def leave
+    event = Event.find(params[:event_id])
+
+    event.participants.delete(@current_user)
+    head :ok
   end
 
   private 
